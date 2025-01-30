@@ -1,0 +1,89 @@
+# ASP.NET Core
+bin/
+obj/
+*.db
+*.db-journal
+.migrations/
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+.vscode-test/
+
+# User-specific files
+*.swp
+*.swo
+*.sublime-*
+*.bak
+*.tmp
+*.log
+
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/publish/
+**/dist/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+project.lock.json
+project.assets.json
+packages.lock.json
+package-lock.json
+
+# Logs
+logs/
+*.log
+**/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Rider settings (optional, uncomment if necessary)
+# .idea/
+# *.sln.iml
+
+# Resharper
+_ReSharper.Caches/
+
+# Dotnet tools
+.dotnet-tools/
+
+# Entity Framework Migrations
+migrations/
+
+# Coverage and testing
+TestResults/
+coverage/
+.coverage/
+*.coverage
+*.coveragexml
+*.trx
+*.cspkg
+*.ncrunch*
+ncrunch/
+ncrunchsolution/
+NCrunchTemp_*/
+
+# Docker
+docker-compose.override.yml
+**/docker-compose.override.yml
+
+# Misc
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
