@@ -1,11 +1,17 @@
-using System.Collections.Concurrent;
+using Microsoft.EntityFrameworkCore;
+using UrlShortener.Database;
 
 namespace UrlShortener.Services;
 
 public class UrlShortenerService : IUrlShortenerService
 {
     private static readonly char[] Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-    private readonly ConcurrentDictionary<string, string> _urlStore = [];
+    private readonly UrlShortenerDbContext _dbContext;
+
+    public UrlShortenerService(UrlShortenerDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     private static string GenerateShortCode()
     {
@@ -13,28 +19,38 @@ public class UrlShortenerService : IUrlShortenerService
         return string.Create(5, Chars, (shortCode, charsState) => Random.Shared.GetItems(charsState, shortCode));
     }
 
-    public string ShortenAndStoreUrl(string longUrl)
+    public async Task<string> ShortenAndStoreUrl(string longUrl)
     {
         // Check if the long URL is already in the dictionary
-        var shortCode = _urlStore.FirstOrDefault(kv => kv.Value == longUrl).Key;
-        if (!string.IsNullOrWhiteSpace(shortCode))
+        var existing = _dbContext.UrlMappings.FirstOrDefault(u => u.LongUrl == longUrl);
+        if (existing is not null)
         {
-            return shortCode;
+            return existing.ShortCode;
         }
-        
+
         // Generate a new short code
-        while (true)
+        string shortCode;
+        do
         {
             shortCode = GenerateShortCode();
-            if (_urlStore.TryAdd(shortCode, longUrl))
-            {
-                return shortCode;
-            }
-        }
+        } 
+        while (_dbContext.UrlMappings.Any(u => u.ShortCode == shortCode));
+        
+        var urlMapping = new UrlMapping
+        {
+            ShortCode = shortCode,
+            LongUrl = longUrl
+        };
+
+        _dbContext.UrlMappings.Add(urlMapping);
+        await _dbContext.SaveChangesAsync();
+
+        return shortCode;
     }
 
-    public string? GetOriginalUrl(string shortCode)
+    public async Task<string?> GetOriginalUrl(string shortCode)
     {
-        return _urlStore.GetValueOrDefault(shortCode);
+        var urlMapping = await _dbContext.UrlMappings.FirstOrDefaultAsync(u => u.ShortCode == shortCode);
+        return urlMapping?.LongUrl;
     }
 }

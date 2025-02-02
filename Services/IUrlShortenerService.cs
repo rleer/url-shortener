@@ -2,6 +2,6 @@ namespace UrlShortener.Services;
 
 public interface IUrlShortenerService
 {
-    string ShortenAndStoreUrl(string longUrl);
-    string? GetOriginalUrl(string shortCode);
+    Task<string> ShortenAndStoreUrl(string longUrl);
+    Task<string?> GetOriginalUrl(string shortCode);
 }
