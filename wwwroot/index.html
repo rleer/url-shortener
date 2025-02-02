@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="/pico.sand.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="container">
+    <h2>URL Shortener</h2>
+    <form>
+        <fieldset role="group">
+            <input type="text" id="urlInput" placeholder="Enter a URL to shorten...">
+            <input type="button" onclick="shortenUrl()" value="Shorten URL">
+        </fieldset>
+    </form>
+    <div id="result" class="output"></div>
+    <div id="copy-message" hidden>Copied to clipboard!</div>
+</main>
+<script src="/script.js"></script>
+</body>
+</html>
