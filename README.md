@@ -17,7 +17,7 @@ This is a simple URL Shortener built with **.NET 8** and **Entity Framework Core
 ### 1. Clone the Repository
 ```sh
 git clone https://github.com/rleer/url-shortener.git
-cd url-shortener
+cd url-shortener/src/UrlShortener.API
 ```
 
 ### 2. Install Dependencies
@@ -30,12 +30,11 @@ dotnet restore
 This will create an `urls.db` SQLite database and apply the necessary schema:
 ```sh
 dotnet ef migrations add InitialCreate
-
 dotnet ef database update
 ```
 
 ### 4. Run the Application
-Start the server:
+Start the API service:
 ```sh
 dotnet run
 ```
@@ -80,6 +79,9 @@ http://localhost:5062/
 - The frontend automatically updates the page with the shortened URL without refreshing.
 
 ## Future Enhancements
+- Implement more sophisticated URL shortening algorithm
+- Implement URL validation and sanitization
+- Improve error handling
 - Implement analytics (click tracking)
 - Add user authentication for managing links
 - Use a cloud database instead of SQLite
